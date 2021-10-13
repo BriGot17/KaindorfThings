@@ -11,14 +11,14 @@
     </header>
 
     <h2 class="subheadline">Manuelle Lampensteuerung</h2>
-
+    <iframe name="myiframe" style="display: none;"></iframe>
     <div id="wrapper">
       <div id="switching">
         
-        <form class="button" method="PUT" action="/api/on">
+        <form target="myiframe" class="button" method="PUT" action="/api/on">
           <button id="on">Einschalten</button>
         </form>
-        <form class="button" method="PUT" action="/api/off">
+        <form class="button" target="myiframe" method="PUT" action="/api/off">
           <button id="off">Ausschalten</button>
         </form>
         
@@ -27,7 +27,8 @@
       <div id="switching">
         <div class="slidecontainer">
           <p>Helligkeit</p>
-          <input
+          <form target="myiframe">
+            <input
             name="lightlevel"
             type="range"
             min="0"
@@ -37,6 +38,8 @@
             id="brightness-slider"
             onchange="submit()"
           />
+          </form>
+          
         </div>
       </div>
     </div>
@@ -44,7 +47,7 @@
     <div class="infoContainer">
       <h2 class="subheadline">Geräte-Information</h2>
       <p>Lampenstatus: an/aus</p>
-      <p>Aktueller Feuchtigkeitswert: /\</p>
+      <p>Aktueller Feuchtigkeitswert: <span id="moisturefield"></span></p>
     </div>
     <script src="../static/main.js"></script>
   </body>
