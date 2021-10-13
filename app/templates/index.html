@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>KaindorfThings</title>
+    <link rel="stylesheet" href="{{ url_for('static' , filename='main.css') }}" />
+  </head>
+  <body>
+    <header class="header">
+      <p>left text</p>
+      <h1>Kaindorf Things</h1>
+      <p>right text</p>
+    </header>
+
+    <h2 class="subheadline">Manuelle Lampensteuerung</h2>
+    <iframe name="myiframe" style="display: none;"></iframe>
+    <div id="wrapper">
+      <div id="switching">
+        
+        <form target="myiframe" class="button" method="PUT" action="/api/on">
+          <button id="on">Einschalten</button>
+        </form>
+        <form class="button" target="myiframe" method="PUT" action="/api/off">
+          <button id="off">Ausschalten</button>
+        </form>
+        
+        
+      </div>
+      <div id="switching">
+        <div class="slidecontainer">
+          <p>Helligkeit</p>
+          <form target="myiframe">
+            <input
+            name="lightlevel"
+            type="range"
+            min="0"
+            max="254"
+            value="254"
+            class="slider"
+            id="brightness-slider"
+            onchange="submit()"
+          />
+          </form>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="infoContainer">
+      <h2 class="subheadline">Geräte-Information</h2>
+      <p>Lampenstatus: an/aus</p>
+      <p>Aktueller Feuchtigkeitswert: <span id="moisturefield"></span></p>
+    </div>
+    <script src="../static/main.js"></script>
+  </body>
+</html>

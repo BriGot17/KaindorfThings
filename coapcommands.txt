@@ -1,0 +1,3 @@
+coap-client -m put -u "cisco" -k "1vB3D29hz7Uja2wS" -e '{"5850": 1, "5851": 1}' "coaps://192.168.1.10:5684/15004/131076"
+coap-client -m put -u "cisco" -k "1vB3D29hz7Uja2wS" -e '{"5850": 0}' "coaps://192.168.1.10:5684/15004/131076"
+coap-client -m put -u "cisco" -k "1vB3D29hz7Uja2wS" -e '{"5850": q, "5851": <placeholder>}' "coaps://192.168.1.10:5684/15004/131076"
