@@ -22,8 +22,9 @@ def lamp_off():
 @app.route('/api/on', methods=['PUT', 'GET'])
 def lamp_on():
     coap.turn_on()
+    print('hello')
     return redirect("http://localhost:5000/")
-@app.route('/api/on/level')
+@app.route('/api/on/level', methods=['PUT', 'GET'])
 def lamp_light_change():
     try:
         level = int(request.args['lightlevel'])
@@ -36,13 +37,21 @@ def lamp_light_change():
 @app.route('/api/moisturedata', methods=['PUT', 'GET'])
 def get_moisture():
     value = int(request.args['moisture'])
-    if value <= 60:
+    f = open('value.txt', 'w')
+    f.write(str(value)  )
+    f.close()
+    if int(value) <= 60:
         coap.turn_on()
     return '{"result": "success"}'
 
 @app.route('/api/moistureout')
 def return_moisture():
-    return '{"moisture": "' + str(random.randint(0,10)) + '"}'
+    f = open('value.txt', 'r')
+    value = f.read()
+    f.close()
+    print(value)
+    
+    return '{"moisture": "' + str(value) + '"}'
 
 @app.route('/api/ciscodisco/on', methods=['PUT', 'GET'])
 def disco_on():

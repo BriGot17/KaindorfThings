@@ -5,11 +5,16 @@ window.onload = () => {
       method: 'GET'})
       .then(response => response.json())
       .then(data =>{
-        console.log(data)
         document.getElementById('moisturefield').innerHTML=data.moisture;
       })
-  }, 10000)
+  }, 8000)
+
+  document.getElementById("brightness-slider").onchange = (e) => {
+    console.log(e)
+    fetch(`/api/on/level?lightlevel=${e.currentTarget.value}`, {method: 'PUT'})
+  }
 };
+
 
 function disco(){
   box = document.getElementById('discotoggle')  
@@ -35,4 +40,7 @@ function wait(ms)
   while(end < start + ms){
     end = new Date().getTime();
   }
+}
+function submit(e) {
+  console.log(e);
 }

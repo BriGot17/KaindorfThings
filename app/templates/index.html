@@ -6,9 +6,9 @@
   </head>
   <body>
     <header class="header">
-      <p>left text</p>
+      <img src="{{ url_for('static' , filename='kaindorf_logo.png') }}", height="50px">
       <h1>Kaindorf Things</h1>
-      <p>right text</p>
+      <img src="{{ url_for('static' , filename='informatik_logo.png') }}", height="100px", style="margin-top: -1.5em;">
     </header>
 
     <h2 class="subheadline">Manuelle Lampensteuerung</h2>
@@ -27,7 +27,7 @@
       </div>
       <div id="switching">
         <div class="slidecontainer">
-          <p>Helligkeit</p>
+          <p style="margin-top: 2em ;margin-bottom: -1.5em;">Helligkeit</p>
           <form target="myiframe">
             <input
             name="lightlevel"
@@ -37,7 +37,6 @@
             value="254"
             class="slider"
             id="brightness-slider"
-            onchange="submit()"
           />
           </form>
         </div>
@@ -52,7 +51,7 @@
     </form>
     <div class="infoContainer">
       <h2 class="subheadline">Geräte-Information</h2>
-      <p>Aktueller Feuchtigkeitswert: <span id="moisturefield"></span></p>
+      <p style="font-size: 1.5em;">Aktueller Feuchtigkeitswert: <span id="moisturefield"></span></p>
     </div>
     <script src="../static/main.js"></script>
   </body>
