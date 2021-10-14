@@ -67,7 +67,7 @@ h1 {
 .slider {
   -webkit-appearance: none;
   width: 400px;
-  height: 50px;
+  height: 30px;
   background: #d3d3d3;
   outline: none;
   opacity: 1;

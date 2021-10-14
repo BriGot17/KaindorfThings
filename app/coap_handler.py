@@ -12,7 +12,7 @@ class coap_handler:
         self.ip = ip
 
     def turn_on(self):
-        order = '{"5850": 1, "5851": 1}'
+        order = '{"5850": 1 }'
         command = f'coap-client -m put -u "{self.name}" -k {self.key} -e \'{order}\' "coaps://{self.ip}:5684/15004/131076"'
         stream = os.popen(command)
 
