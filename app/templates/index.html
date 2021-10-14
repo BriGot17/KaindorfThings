@@ -2,6 +2,7 @@
   <head>
     <title>KaindorfThings</title>
     <link rel="stylesheet" href="{{ url_for('static' , filename='main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static' , filename='toggle.css') }}" />
   </head>
   <body>
     <header class="header">
@@ -39,14 +40,18 @@
             onchange="submit()"
           />
           </form>
-          
         </div>
       </div>
     </div>
-
+    <p class="subheadline" style="padding-bottom: 0.5em;">Disco mode</p>
+    <form>
+      <label class="toggleswitch">
+        <input id="discotoggle" type="checkbox" onchange="disco()">
+        <span class="toggleslider round"></span>
+      </label>
+    </form>
     <div class="infoContainer">
       <h2 class="subheadline">Geräte-Information</h2>
-      <p>Lampenstatus: an/aus</p>
       <p>Aktueller Feuchtigkeitswert: <span id="moisturefield"></span></p>
     </div>
     <script src="../static/main.js"></script>

@@ -44,5 +44,12 @@ def get_moisture():
 def return_moisture():
     return '{"moisture": "' + str(random.randint(0,10)) + '"}'
 
+@app.route('/api/ciscodisco/on', methods=['PUT', 'GET'])
+def disco_on():
+    print('corehello')
+    coap.ciscodisco()
+    return 'Success'
+
+
 app.run(host = "0.0.0.0")
 
