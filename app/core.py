@@ -1,5 +1,4 @@
-from flask import Flask, redirect, request
-from flask import render_template
+from flask import Flask, redirect, request, render_template
 import random
 
 from coap_handler import coap_handler
@@ -22,7 +21,6 @@ def lamp_off():
 @app.route('/api/on', methods=['PUT', 'GET'])
 def lamp_on():
     coap.turn_on()
-    print('hello')
     return redirect("http://localhost:5000/")
 @app.route('/api/on/level', methods=['PUT', 'GET'])
 def lamp_light_change():
@@ -31,7 +29,6 @@ def lamp_light_change():
         coap.change_level(level)
     except:
         print('Not a number between 1 and 254')
-    print("deja vu")
     return redirect("http://localhost:5000/")
 
 @app.route('/api/moisturedata', methods=['PUT', 'GET'])
@@ -49,7 +46,6 @@ def return_moisture():
     f = open('value.txt', 'r')
     value = f.read()
     f.close()
-    print(value)
     
     return '{"moisture": "' + str(value) + '"}'
 
