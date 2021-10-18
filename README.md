@@ -30,6 +30,40 @@ Im Ornder <Sensoren> befindet sich der Code der auf dem ESP8266 ausgeführt werd
 des Codes auf dem ESP funktioniert am einfachsten mit der VS Code Erweiterung platform.io. Sollte es dabei unter Windows zu Problemen kommen: Überprüfen, ob die Treiber 
 installiert sind.
   
+## Aufsetzen
+
+Das Aufsetzen wird in drei verschiedene Teile aufgeteilt: Aufsetzen des Gateways samt Lampe, Einrichten des Webinterfaces und Aufsetzen des Sensors.
+  
+### Gateway
+  
+Für das Aufsetzen des Gateways wird die IKEA Home App benötigt. Für den normalen Betrieb wird diese aber nicht benötigt.
+  1. IKEA Home App installieren
+  2. Tradfri Gateway per LAN-Kabel ins Netzwerk hängen
+  3. Mit dem Handy ins gleiche Netzwerk verbinden
+  4. IKEA Home App öffnen und darin nach Gateway suchen
+  5. Den Schritten in der App folgen
+  6. Funktionstest mit der IKEA Fernbedienung
+Damit sollte das Gateway samt Lampe einsatzbereit sein.
+  
+### Webinterface
+  
+Das Webinterface wird auf dem Raspberry PI als Webserver deployed. Der Server dient gleichzeitig als API für den Sensor.
+  
+  1. Dieses Github Repository klonen
+  2. Sicher gehen, das `Libtools` und `Autoconf` installiert sind. Falls nicht: `sudo apt insatll libtools autoconf`
+  3. Die Datei [install-coap-client.sh](https://github.com/BriGot17/KaindorfThings/blob/master/install-coap-client.sh) ausführen
+  4. Command `coap-client` mit Beispielen aus Datei [coapcommands.txt](https://github.com/BriGot17/KaindorfThings/blob/master/coapcommands.txt) testen
+  5. Fehlende Python dependencies (Im Normalfall nur Flask) installieren: `python3 pip install flask`
+  6. Die Datei `/app/core.py` starten mit`python3 core.py`
+  7. `Localhost:5000` im Browser ansurfen. Es sollte nun das Webinterface aufscheinen.
+  
+### Sensor
+  
+Um den ESP zu benutzen, muss zuerst der Code auf ihm deployed werden. Dies geschieht am Einfachsten mit der VSCode Erweiterung `platform.io`.
+  1. Platform.io in VSCode installieren
+  2. Code für Sensor in VSCode öffnen
+  3. ...
+
 ## Known Issues
 
 + Sollte der Webserver/die API um Funktionen erweitert werden, darauf achten, dass nicht zu schnell zu viele coap Requests an das Ikea Gateway verschickt, das verschluckt sich sonst.
