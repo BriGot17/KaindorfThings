@@ -8,8 +8,8 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "C:/Users/Admin/Documents/PlatformIO/Projects/Moisture Final/include",
-                "C:/Users/Admin/Documents/PlatformIO/Projects/Moisture Final/src",
+                "C:/Users/Admin/Desktop/Schule/21_22/KaindorfThings/Moisture_Sensor/include",
+                "C:/Users/Admin/Desktop/Schule/21_22/KaindorfThings/Moisture_Sensor/src",
                 "C:/Users/Admin/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266HTTPClient/src",
                 "C:/Users/Admin/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src",
                 "C:/Users/Admin/.platformio/packages/framework-arduinoespressif8266/tools/sdk/include",
@@ -56,8 +56,8 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "C:/Users/Admin/Documents/PlatformIO/Projects/Moisture Final/include",
-                    "C:/Users/Admin/Documents/PlatformIO/Projects/Moisture Final/src",
+                    "C:/Users/Admin/Desktop/Schule/21_22/KaindorfThings/Moisture_Sensor/include",
+                    "C:/Users/Admin/Desktop/Schule/21_22/KaindorfThings/Moisture_Sensor/src",
                     "C:/Users/Admin/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266HTTPClient/src",
                     "C:/Users/Admin/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src",
                     "C:/Users/Admin/.platformio/packages/framework-arduinoespressif8266/tools/sdk/include",
