@@ -8,7 +8,7 @@ Autoren:
 
 ## Abstract
 
-Wir hatten den Auftrag ein Internet of Things-Schaustück für die SBIM und BEST3 zu entwickeln. Hardware wurde von der HTBLA Kaindorf bereitgestellt.
+Wir hatten den Auftrag ein Internet of Things-Schaustück für die SBIM und BEST3 zu entwickeln. Hardware wurde von der HTBLA Kaindorf bereitgestellt. Aufgrund des Zeitdrucks entschieden wir uns, eine Minimalidee umzusetzen. Da wir vor einigen Jahren bereits eine IKEA Tradfri angesteuert haben, wollten wir dieses Feature auf jeden Fall implementieren. Und weil wir uns nicht mit Rust auskennen, schrieben wir den Server schnell in Python mit Flask nach. Außerdem wollten wir ein weiteres Feature implementieren, um möglicherweise die Lampe über einen anderen Weg anzusteuern. Also implementierten wir einen Feuchtigkeitssensoren, der über einen ESP8266 die Messdaten an den Server auf dem Raspberry PI sendet. Fallen diese Daten unter einen Grenzwert, wird die Lampe aktiviert.
 
 ## Hardware
 
@@ -23,20 +23,16 @@ Für den Aufbau des Modells in seiner aktuellen Ausführung (Stand 14.10.2021) w
 
 ## Software
 
-Im Ordner [app](https://github.com/BriGot17/KaindorfThings/tree/master/app) befindet sich der Sourcecode für den Webserver, welcher auf dem Raspberry PI ausgeführt wird.
-Zuvor muss allerdings mit der Python library [pytradfri](https://github.com/home-assistant-libs/pytradfri) ein Nutzername und PSK mit dem Gateway erstellt und in der Datei
-core.py eingesetzt werden. Danach kann der Server gestartet werden. Auf dem Raspberry PI sollte dann unter *localhost:5000/* das Webinterface erreichbar sein.
+Im Ordner [app](https://github.com/BriGot17/KaindorfThings/tree/master/app) befindet sich der Sourcecode für den Webserver, welcher auf dem Raspberry PI ausgeführt wird. Zuvor muss allerdings mit der Python library [pytradfri](https://github.com/home-assistant-libs/pytradfri) ein Nutzername und PSK mit dem Gateway erstellt und in der Datei core.py eingesetzt werden. Danach kann der Server gestartet werden. Auf dem Raspberry PI sollte dann unter *localhost:5000/* das Webinterface erreichbar sein.
 
-Im Ornder <Sensoren> befindet sich der Code der auf dem ESP8266 ausgeführt werden soll. Je nach Situation muss zuvor darin die IP des Gateways geändert werden. Das deployen
-des Codes auf dem ESP funktioniert am einfachsten mit der VS Code Erweiterung platform.io. Sollte es dabei unter Windows zu Problemen kommen: Überprüfen, ob die Treiber 
-installiert sind.
-  
+Im Ordner [Moisture Sensor](https://github.com/BriGot17/KaindorfThings/tree/master/Moisture_Sensor) befindet sich der Code der auf dem ESP8266 ausgeführt werden soll. Je nach Situation muss zuvor darin die IP des Gateways geändert werden. Das deployen des Codes auf dem ESP funktioniert am einfachsten mit der VS Code Erweiterung platform.io. Sollte es dabei unter Windows zu Problemen kommen: Überprüfen, ob die Treiber installiert sind.
+
 ## Aufsetzen
 
 Das Aufsetzen wird in drei verschiedene Teile aufgeteilt: Aufsetzen des Gateways samt Lampe, Einrichten des Webinterfaces und Aufsetzen des Sensors.
-  
+
 ### Gateway
-  
+
 Für das Aufsetzen des Gateways wird die IKEA Home App benötigt. Für den normalen Betrieb wird diese aber nicht benötigt.
   1. IKEA Home App installieren
   2. Tradfri Gateway per LAN-Kabel ins Netzwerk hängen
@@ -45,11 +41,11 @@ Für das Aufsetzen des Gateways wird die IKEA Home App benötigt. Für den norma
   5. Den Schritten in der App folgen
   6. Funktionstest mit der IKEA Fernbedienung
 Damit sollte das Gateway samt Lampe einsatzbereit sein.
-  
+
 ### Webinterface
-  
+
 Das Webinterface wird auf dem Raspberry PI als Webserver deployed. Der Server dient gleichzeitig als API für den Sensor.
-  
+
   1. Dieses Github Repository klonen
   2. Sicher gehen, das `Libtools` und `Autoconf` installiert sind. Falls nicht: `sudo apt insatll libtools autoconf`
   3. Die Datei [install-coap-client.sh](https://github.com/BriGot17/KaindorfThings/blob/master/install-coap-client.sh) ausführen
@@ -57,9 +53,9 @@ Das Webinterface wird auf dem Raspberry PI als Webserver deployed. Der Server di
   5. Fehlende Python dependencies (Im Normalfall nur Flask) installieren: `python3 pip install flask`
   6. Die Datei `/app/core.py` starten mit`python3 core.py`
   7. `Localhost:5000` im Browser ansurfen. Es sollte nun das Webinterface aufscheinen.
-  
+
 ### Sensor
-  
+
 Um den ESP zu benutzen, muss zuerst der Code auf ihm deployed werden. Dies geschieht am Einfachsten mit der VSCode Erweiterung `platform.io`.
   1. Platform.io in VSCode installieren
   2. Code für Sensor in VSCode öffnen
@@ -70,3 +66,5 @@ Um den ESP zu benutzen, muss zuerst der Code auf ihm deployed werden. Dies gesch
 + Sollte der Webserver/die API um Funktionen erweitert werden, darauf achten, dass nicht zu schnell zu viele coap Requests an das Ikea Gateway verschickt, das verschluckt sich sonst.
 + Bei einem Aufbau auf SBIM/BEST3 oder sonstigem großen Event --> Beim Router WLAN Channel auf 13 setzen, um Überschneidungen mit anderen Hotspots auszuweichen. Channel 14 auf 
   jeden Fall vermeiden, der Raspberry PI kann keinen Channel 14.
++ Nach gewisser Zeit hat die Lampe von selbst angefangen zu blinken. Es könnte hier entweder an der Lampe oder am Gateway liegen. Bei Gateway: Factory Reset, Bei Lampe: Wir suchen noch eine Lösung
+
