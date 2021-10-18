@@ -63,7 +63,7 @@ Das Webinterface wird auf dem Raspberry PI als Webserver deployed. Der Server di
 Um den ESP zu benutzen, muss zuerst der Code auf ihm deployed werden. Dies geschieht am Einfachsten mit der VSCode Erweiterung `platform.io`.
   1. Platform.io in VSCode installieren
   2. Code für Sensor in VSCode öffnen
-  3. ...
+  3. ![alt text](https://github.com/BriGot17/KaindorfThings/tree/master/Readme_Pics/PIO_Upload.png?raw=true)
 
 ## Known Issues
 
