@@ -2,7 +2,7 @@
 IoT-Schaustück für Bildungsmesse
 
 Autoren:
-+ Daniel Brinar: [@shadow174](https://github.com/Shadow174)
++ Daniel Brinar: [@Shadow17402](https://github.com/Shadow17402)
 - Peter Gottlieb: [@gotped17](https://github.com/gotped17)
 
 
