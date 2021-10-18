@@ -25,7 +25,7 @@ Für den Aufbau des Modells in seiner aktuellen Ausführung (Stand 14.10.2021) w
 
 Im Ordner [app](https://github.com/BriGot17/KaindorfThings/tree/master/app) befindet sich der Sourcecode für den Webserver, welcher auf dem Raspberry PI ausgeführt wird. Zuvor muss allerdings mit der Python library [pytradfri](https://github.com/home-assistant-libs/pytradfri) ein Nutzername und PSK mit dem Gateway erstellt und in der Datei core.py eingesetzt werden. Danach kann der Server gestartet werden. Auf dem Raspberry PI sollte dann unter *localhost:5000/* das Webinterface erreichbar sein.
 
-Im Ordner [Moisture Sensor](https://github.com/BriGot17/KaindorfThings/tree/master/Moisture_Sensor) befindet sich der Code der auf dem ESP8266 ausgeführt werden soll. Je nach Situation muss zuvor darin die IP des Gateways geändert werden. Das deployen des Codes auf dem ESP funktioniert am einfachsten mit der VS Code Erweiterung platform.io. Sollte es dabei unter Windows zu Problemen kommen: Überprüfen, ob die Treiber installiert sind.
+Im Ordner [Moisture Sensor](https://github.com/BriGot17/KaindorfThings/tree/master/Moisture_Sensor) befindet sich der Code der auf dem ESP8266 ausgeführt werden soll. Je nach Situation muss zuvor darin die IP des Gateways geändert werden. Das deployen des Codes auf dem ESP funktioniert am einfachsten mit der VS Code Erweiterung platform.io.
 
 ## Aufsetzen
 
@@ -63,11 +63,11 @@ Um den ESP zu benutzen, muss zuerst der Code auf ihm deployed werden. Dies gesch
   
      ![alt text](https://github.com/BriGot17/KaindorfThings/blob/master/Readme_Pics/PIO_Upload.png?raw=true)
   
-     Sollte der ESP nicht gefunden werden stellen sie bitte sicher das der ESP auch von PlatformIO erkannt wurde, sollte dies nicht der Fall sein überprüfen Sie ob die richtigen          [Treiber](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) für das Gerät installiert wurden.
+     Sollte der ESP nicht gefunden werden stellen sie bitte sicher das der ESP auch von PlatformIO erkannt wurde, sollte dies nicht der Fall sein überprüfen Sie ob die richtigen [Treiber](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) für das Gerät installiert wurden.
   4. Nach dem Upload sollte der ESP laufen solange er Strom hat.
-  
+
 #### Verkabelung
-  
+
 ## Known Issues
 
 + Sollte der Webserver/die API um Funktionen erweitert werden, darauf achten, dass nicht zu schnell zu viele coap Requests an das Ikea Gateway verschickt, das verschluckt sich sonst.
