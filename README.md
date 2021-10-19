@@ -68,10 +68,27 @@ Um den ESP zu benutzen, muss zuerst der Code auf ihm deployed werden. Dies gesch
 
 #### Verkabelung
 
+## Endpoints
+
+`/api/on`: Schaltet die Lampe ein
+
+`/api/off`: Schaltet die Lampe aus
+
+`/api/on/level?lightlevel={}`: Setzt Helligkeit auf angegebenen Wert
+
+`/api/ciscodisco`: Aktiviert einen Disco-Durchlauf
+
+`/api/moisturedata`: Sensorwerte des Feuchtigkeitssensors hierher senden. Bei Werten unter 60 wird die Lampe eingeschaltet
+
+`/api/moistureout`: Gibt den aktuell gespeicherten Feuchtigkeitswert zurück
+
+
+
 ## Known Issues
 
 + Sollte der Webserver/die API um Funktionen erweitert werden, darauf achten, dass nicht zu schnell zu viele coap Requests an das Ikea Gateway verschickt, das verschluckt sich sonst.
 + Bei einem Aufbau auf SBIM/BEST3 oder sonstigem großen Event --> Beim Router WLAN Channel auf 13 setzen, um Überschneidungen mit anderen Hotspots auszuweichen. Channel 14 auf 
   jeden Fall vermeiden, der Raspberry PI kann keinen Channel 14.
 + Nach gewisser Zeit hat die Lampe von selbst angefangen zu blinken. Es könnte hier entweder an der Lampe oder am Gateway liegen. Bei Gateway: Factory Reset, Bei Lampe: Wir suchen noch eine Lösung
++ Der Disco-Modus funktioniert nicht einwandfrei. Es kann dazu kommen, dass sich das Gateway verschluckt oder das generell die Request zu langsam bearbeitet werden.
 
