@@ -59,8 +59,7 @@ Das Webinterface wird auf dem Raspberry PI als Webserver deployed. Der Server di
 Um den ESP zu benutzen, muss zuerst der Code auf ihm deployed werden. Dies geschieht am Einfachsten mit der VSCode Erweiterung `platform.io`.
   1. Platform.io in VSCode installieren
   2. Code für Sensor in VSCode öffnen
-  3. 
-
+  3. In den folgenden Zeilen müssen Parameter eingegeben werden das er sich zum Wifi verbindet und an die richtige Server IP schickt.
 ```cpp
 const char* wifi_ssid = "SSID"; // SSID
 const char* wifi_password = "WIFI_PASSWORD"; // WIFI_PASSWORD 
