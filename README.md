@@ -34,25 +34,37 @@ Das Aufsetzen wird in drei verschiedene Teile aufgeteilt: Aufsetzen des Gateways
 ### Gateway
 
 Für das Aufsetzen des Gateways braucht man die IKEA Home App. Für den normalen Betrieb wird diese aber nicht benötigt.
-  1. IKEA Home App installieren
-  2. Tradfri Gateway per LAN-Kabel ins Netzwerk hängen
-  3. Mit dem Handy ins gleiche Netzwerk verbinden
-  4. IKEA Home App öffnen und darin nach Gateway suchen
-  5. Den Schritten in der App folgen
-  6. Funktionstest mit der IKEA Fernbedienung
-Damit sollte das Gateway samt Lampe einsatzbereit sein.
+    1. IKEA Home App installieren
+    2. Tradfri Gateway per LAN-Kabel ins Netzwerk hängen
+    3. Mit dem Handy ins gleiche Netzwerk verbinden
+    4. IKEA Home App öffnen und darin nach Gateway suchen
+    5. Den Schritten in der App folgen
+    6. Funktionstest mit der IKEA Fernbedienung
+  Damit sollte das Gateway samt Lampe einsatzbereit sein.
 
 ### Webinterface
 
 Das Webinterface wird auf dem Raspberry PI als Webserver deployed. Der Server dient gleichzeitig als API für den Sensor.
 
   1. Dieses Github Repository klonen
+
   2. Sicher gehen, das `Libtools` und `Autoconf` installiert sind. Falls nicht: `sudo apt insatll libtools autoconf`
+
   3. Die Datei [install-coap-client.sh](https://github.com/BriGot17/KaindorfThings/blob/master/install-coap-client.sh) ausführen
-  4. Command `coap-client` mit Beispielen aus Datei [coapcommands.txt](https://github.com/BriGot17/KaindorfThings/blob/master/coapcommands.txt) testen
-  5. Fehlende Python dependencies (Im Normalfall nur Flask) installieren: `python3 pip install flask`
-  6. Die Datei `/app/core.py` starten mit`python3 core.py`
-  7. `Localhost:5000` im Browser ansurfen. Es sollte nun das Webinterface aufscheinen.
+
+  4. Via `coap-client` einen neuen Nutzer und PSK mit dem Gateway ausmachen
+
+     `coap-client -m post -u "Client_identity" -k "<Gateway Security Code>" -e "{\"9090\":\"<Nutzername>\"}" "coaps://<Gateway IP>:5684/15011/9063"`
+
+  5. Command `coap-client` mit Beispielen aus Datei [coapcommands.txt](https://github.com/BriGot17/KaindorfThings/blob/master/coapcommands.txt) testen. Nicht vergessen den Nutzernamen und den PSK zu tauschen!
+
+  6. Fehlende Python dependencies (Im Normalfall nur Flask) installieren: `python3 pip install flask`
+
+  7. Die Datei `/app/core.py` starten mit`python3 core.py`
+
+  8. `Localhost:5000` im Browser ansurfen. Es sollte nun das Webinterface aufscheinen.
+
+
 
 ### Sensor
 
@@ -83,8 +95,6 @@ const unsigned int writeInterval = 5000; // defines how often updates are sent t
 
 `/api/on/level?lightlevel={}`: Setzt Helligkeit auf angegebenen Wert
 
-`/api/ciscodisco`: Aktiviert einen Disco-Durchlauf
-
 `/api/moisturedata`: Sensorwerte des Feuchtigkeitssensors hierher senden. Bei Werten unter 60 wird die Lampe eingeschaltet
 
 `/api/moistureout`: Gibt den aktuell gespeicherten Feuchtigkeitswert zurück
@@ -96,6 +106,20 @@ const unsigned int writeInterval = 5000; // defines how often updates are sent t
 + Sollte der Webserver/die API um Funktionen erweitert werden, darauf achten, dass nicht zu schnell zu viele coap Requests an das Ikea Gateway verschickt, das verschluckt sich sonst.
 + Bei einem Aufbau auf SBIM/BEST3 oder sonstigem großen Event --> Beim Router WLAN Channel auf 13 setzen, um Überschneidungen mit anderen Hotspots auszuweichen. Channel 14 auf 
   jeden Fall vermeiden, der Raspberry PI kann keinen Channel 14.
-+ Nach gewisser Zeit hat die Lampe von selbst angefangen zu blinken. Es könnte hier entweder an der Lampe oder am Gateway liegen. Bei Gateway: Factory Reset, Bei Lampe: Wir suchen noch eine Lösung
++ Nach gewisser Zeit hat die Lampe von selbst angefangen zu blinken. Es könnte hier entweder an der Lampe oder am Gateway liegen. Anscheinend hat sich beim neusynchonisieren eine neue Gruppe gebildet und dabei eine andere group-ID angenommen. Das heißt, dass bei einem Resync die group-ID neu abgefragt und in den Source Code eingetragen werden muss.
 + Der Disco-Modus funktioniert nicht einwandfrei. Es kann dazu kommen, dass sich das Gateway verschluckt oder das generell die Request zu langsam bearbeitet werden.
 
+## TODO
+
++ Es soll möglich sein, die IKEA device bzw. group-ID automatisch abzufragen und dynamisch zu benutzen, damit im Fall, dass sich alles in eine neue Gruppe verschiebt oder es in einem neuen System eingesetzt wird, nicht jedes mal der Source Code verändert werden muss damit es funktioniert.
++ Die Lampe soll zum Blinken gebracht werden. Der letzte Versuch wurde herausgelöscht, da er das Gateway überfordert hat und die Lampe sich damit selbstständig gemacht hat.
+
+## References und Useful Links
+
+Hier sind einige Links und andere Github repositories, die wir während des Erstellens des Schaustücks benutzt haben
+
+#### Gateway communication
+
++ [ikea-tradfri-coap-docs](https://github.com/glenndehaan/ikea-tradfri-coap-docs) von [@glenndehaan](https://github.com/glenndehaan/): Eine Sammlung an coap Commands für IKEA Tradfri
++ [pytradfri](https://github.com/home-assistant-libs/pytradfri)-module: Python module für einfachere Interaktion via Pyhon, wurde anfänglich benutzt und gibt einige Denkansätze
++ [pytradfri-rest](https://github.com/fjaderboll/pytradfri-rest): Pytradfri als REST-API. Wurde nicht benutzt, könnte aber viel Arbeit ersparen.
