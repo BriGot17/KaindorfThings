@@ -2,6 +2,7 @@ import os
 from sys import stdout
 import time
 
+# Klasse für alle benötigten coap-Requests um mit der Lampe und dem Gateway zu reden
 class coap_handler:
     name = ''
     key = ''
@@ -14,6 +15,7 @@ class coap_handler:
         self.ip = ip
         pass
 
+    # Sendet Request zum Lampe einschalten
     def turn_on(self):
         print('on')
         order = '{"5850": 1 }'
@@ -22,6 +24,7 @@ class coap_handler:
         print(stream)
         pass
 
+    # Sendet Request zum Ändern der Helligkeit
     def change_level(self, level):
         print('change level')
         lightlevel = f'"5851": {level}'
@@ -32,6 +35,7 @@ class coap_handler:
         print(stream)
         pass
     
+    # Sendet Request zum Ausschalten der Lampe
     def turn_off(self):
         print('off')
         order = '{"5850": 0}'
@@ -39,5 +43,3 @@ class coap_handler:
         stream = os.popen(command)
         print(stream)
         pass
-
-        
