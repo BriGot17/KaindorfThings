@@ -33,7 +33,7 @@ Das Aufsetzen wird in drei verschiedene Teile aufgeteilt: Aufsetzen des Gateways
 
 ### Gateway
 
-Für das Aufsetzen des Gateways wird die IKEA Home App benötigt. Für den normalen Betrieb wird diese aber nicht benötigt.
+Für das Aufsetzen des Gateways braucht man die IKEA Home App. Für den normalen Betrieb wird diese aber nicht benötigt.
   1. IKEA Home App installieren
   2. Tradfri Gateway per LAN-Kabel ins Netzwerk hängen
   3. Mit dem Handy ins gleiche Netzwerk verbinden
