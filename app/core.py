@@ -7,7 +7,8 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 
 value = 0
-coap = coap_handler('cisco', '1vB3D29hz7Uja2wS', '192.168.1.10')
+
+coap = coap_handler('cisco', 'vKhOxPvuAOysHDhm', '192.168.1.10')
 
 #  === Route for homepage ===
 @app.route('/', methods=['GET'])
@@ -19,12 +20,14 @@ app.add_url_rule("/", "index", home)
 # === Lampe ausschalten ===
 @app.route('/api/off', methods=['PUT', 'GET'])
 def lamp_off():
+    print('api off')
     coap.turn_off()
     return redirect("http://localhost:5000/")
 
 # === Lampe einschalten ===
 @app.route('/api/on', methods=['PUT', 'GET'])
 def lamp_on():
+    print('api on')
     coap.turn_on()
     return redirect("http://localhost:5000/")
 
@@ -56,16 +59,7 @@ def return_moisture():
     f = open('value.txt', 'r')
     value = f.read()
     f.close()
-    
     return '{"moisture": "' + str(value) + '"}'
-
-# === Aktiviert einen Disco-Durchlauf ===
-@app.route('/api/ciscodisco/on', methods=['PUT', 'GET'])
-def disco_on():
-    print('corehello')
-    coap.ciscodisco()
-    return 'Success'
-
 
 app.run(host = "0.0.0.0")
 

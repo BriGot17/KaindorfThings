@@ -14,27 +14,6 @@ window.onload = () => {
     fetch(`/api/on/level?lightlevel=${e.currentTarget.value}`, {method: 'PUT'})
   }
 };
-
-
-function disco(){
-  box = document.getElementById('discotoggle')  
-  if(box.checked){
-    window.interval = setInterval(function () {
-      if(box.checked){
-        fetch('/api/ciscodisco/on', {method: 'PUT'});
-      }
-      else{
-        clearInterval(window.interval);
-        window.interval = null;
-      }
-    }, 20000);
-  }
-  else{
-    clearInterval(window.interval);
-    window.interval = null;
-  }
-  
-}
 function submit(e) {
   console.log(e);
 }
