@@ -1,18 +1,20 @@
 # KaindorfThings
+
 IoT-Schaustück für Bildungsmesse
 
 Autoren:
+
 + Daniel Brinar: [@Shadow17402](https://github.com/Shadow17402)
 - Peter Gottlieb: [@gotped17](https://github.com/gotped17)
 
-
 ## Abstract
 
-Wir hatten den Auftrag ein Internet of Things-Schaustück für die SBIM und BEST3 zu entwickeln. Hardware wurde von der HTBLA Kaindorf bereitgestellt. Aufgrund des Zeitdrucks entschieden wir uns, eine Minimalidee umzusetzen. Da wir vor einigen Jahren bereits eine IKEA Tradfri angesteuert haben, wollten wir dieses Feature auf jeden Fall implementieren. Und weil wir uns nicht mit Rust auskennen, schrieben wir den Server schnell in Python mit Flask nach. Außerdem wollten wir ein weiteres Feature implementieren, um möglicherweise die Lampe über einen anderen Weg anzusteuern. Also implementierten wir einen Feuchtigkeitssensoren, der über einen ESP8266 die Messdaten an den Server auf dem Raspberry PI sendet. Fallen diese Daten unter einen Grenzwert, wird die Lampe aktiviert.
+Wir hatten den Auftrag, ein Internet of Things-Schaustück für die SBIM und BEST3 zu entwickeln. Hardware wurde von der HTBLA Kaindorf bereitgestellt. Aufgrund des Zeitdrucks entschieden wir uns, eine Minimalidee umzusetzen. Da wir vor einigen Jahren bereits eine IKEA Tradfri angesteuert haben, wollten wir dieses Feature auf jeden Fall implementieren. Und weil wir uns nicht mit Rust auskennen, schrieben wir den Server schnell in Python mit Flask nach. Außerdem wollten wir ein weiteres Feature implementieren, um möglicherweise die Lampe über einen anderen Weg anzusteuern. Also implementierten wir einen Feuchtigkeitssensoren, der über einen ESP8266 die Messdaten an den Server auf dem Raspberry PI sendet. Fallen diese Daten unter einen Grenzwert, wird die Lampe aktiviert.
 
 ## Hardware
 
 Für den Aufbau des Modells in seiner aktuellen Ausführung (Stand 14.10.2021) wird folgende Hardware benötigt:
+
 + 1 ESP8266
 + 1 Feuchtigkeitssensor
 + 1 Raspberry PI 4
@@ -46,50 +48,55 @@ Für das Aufsetzen des Gateways braucht man die IKEA Home App. Für den normalen
 
 Das Webinterface wird auf dem Raspberry PI als Webserver deployed. Der Server dient gleichzeitig als API für den Sensor.
 
-  1. Dieses Github Repository klonen
+1. Dieses Github Repository klonen
 
-  2. Sicher gehen, das `Libtools` und `Autoconf` installiert sind. Falls nicht: `sudo apt insatll libtools autoconf`
+2. Sicher gehen, das `Libtools` und `Autoconf` installiert sind. Falls nicht: `sudo apt insatll libtools autoconf`
 
-  3. Die Datei [install-coap-client.sh](https://github.com/BriGot17/KaindorfThings/blob/master/install-coap-client.sh) ausführen
+3. Die Datei [install-coap-client.sh](https://github.com/BriGot17/KaindorfThings/blob/master/install-coap-client.sh) ausführen
 
-  4. Via `coap-client` einen neuen Nutzer und PSK mit dem Gateway ausmachen
+4. Via `coap-client` einen neuen Nutzer und PSK mit dem Gateway ausmachen
+   
+   `coap-client -m post -u "Client_identity" -k "<Gateway Security Code>" -e "{\"9090\":\"<Nutzername>\"}" "coaps://<Gateway IP>:5684/15011/9063"`
 
-     `coap-client -m post -u "Client_identity" -k "<Gateway Security Code>" -e "{\"9090\":\"<Nutzername>\"}" "coaps://<Gateway IP>:5684/15011/9063"`
+5. Command `coap-client` mit Beispielen aus Datei [coapcommands.txt](https://github.com/BriGot17/KaindorfThings/blob/master/coapcommands.txt) testen. Nicht vergessen den Nutzernamen und den PSK zu tauschen!
 
-  5. Command `coap-client` mit Beispielen aus Datei [coapcommands.txt](https://github.com/BriGot17/KaindorfThings/blob/master/coapcommands.txt) testen. Nicht vergessen den Nutzernamen und den PSK zu tauschen!
+6. Fehlende Python dependencies (Im Normalfall nur Flask) installieren: `python3 pip install flask`
 
-  6. Fehlende Python dependencies (Im Normalfall nur Flask) installieren: `python3 pip install flask`
+7. Die Datei `/app/core.py` starten mit`python3 core.py`
 
-  7. Die Datei `/app/core.py` starten mit`python3 core.py`
-
-  8. `Localhost:5000` im Browser ansurfen. Es sollte nun das Webinterface aufscheinen.
-
-
+8. `Localhost:5000` im Browser ansurfen. Es sollte nun das Webinterface aufscheinen.
 
 ### Sensor
 
 Um den ESP zu benutzen, muss zuerst der Code auf ihm deployed werden. Dies geschieht am Einfachsten mit der VSCode Erweiterung `platform.io`.
-  1. `platform.`io in VSCode installieren
-  2. Code für Sensor in VSCode öffnen
-  3. In der [main.cpp](https://github.com/BriGot17/KaindorfThings/blob/master/Moisture_Sensor/src/main.cpp) müssen Parameter eingegeben werden das er sich zum Wifi verbindet und an   die richtige Server IP schickt.
- ```cpp
-    const char* wifi_ssid = "SSID"; // SSID
-    const char* wifi_password = "WIFI_PASSWORD"; // WIFI_PASSWORD 
-    const char* serverIP = "SERVER_IP"; //SERVER_IP    
-    const unsigned int writeInterval = 5000; // defines how often updates are sent to the server. 1000 = 1 second 
- ```
-  4. Mit PlatformIO kann nun der Code auf den ESP geladen werden wenn dieser angesteckt ist.
-  
-     ![alt text](https://github.com/BriGot17/KaindorfThings/blob/master/Readme_Pics/PIO_Upload.png?raw=true)
-  
-     Sollte der ESP nicht gefunden werden stellen sie bitte sicher das der ESP auch von PlatformIO erkannt wurde, sollte dies nicht der Fall sein überprüfen Sie ob die richtigen          [Treiber](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) für das Gerät installiert wurden. Sollte es dennoch nicht funktionieren überprüfen sie ob in der          [platformio.ini](https://github.com/BriGot17/KaindorfThings/blob/master/Moisture_Sensor/platformio.ini) der Richtige Upload_Port angegeben wurde.
-  5. Nach dem Upload sollte der ESP laufen solange er Strom hat. Es reicht den ESP am Raspberry Pi            anzuschließen.
-#### Verkabelung
-  
-   Ganzes Setup
 
+1. `platform.`io in VSCode installieren
+
+2. Code für Sensor in VSCode öffnen
+
+3. In der [main.cpp](https://github.com/BriGot17/KaindorfThings/blob/master/Moisture_Sensor/src/main.cpp) müssen Parameter eingegeben werden das er sich zum Wifi verbindet und an   die richtige Server IP schickt.
+   
+   ```cpp
+   const char* wifi_ssid = "SSID"; // SSID
+   const char* wifi_password = "WIFI_PASSWORD"; // WIFI_PASSWORD 
+   const char* serverIP = "SERVER_IP"; //SERVER_IP    
+   const unsigned int writeInterval = 5000; // defines how often updates are sent to the server. 1000 = 1 second 
+   ```
+
+4. Mit PlatformIO kann nun der Code auf den ESP geladen werden wenn dieser angesteckt ist.
+   
+   ![alt text](https://github.com/BriGot17/KaindorfThings/blob/master/Readme_Pics/PIO_Upload.png?raw=true)
+   
+   Sollte der ESP nicht gefunden werden stellen sie bitte sicher das der ESP auch von PlatformIO erkannt wurde, sollte dies nicht der Fall sein überprüfen Sie ob die richtigen          [Treiber](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) für das Gerät installiert wurden. Sollte es dennoch nicht funktionieren überprüfen sie ob in der          [platformio.ini](https://github.com/BriGot17/KaindorfThings/blob/master/Moisture_Sensor/platformio.ini) der Richtige Upload_Port angegeben wurde.
+
+5. Nach dem Upload sollte der ESP laufen solange er Strom hat. Es reicht den ESP am Raspberry Pi            anzuschließen.
+   
+   #### Verkabelung
+   
+   Ganzes Setup
+   
    ![alt text](https://github.com/BriGot17/KaindorfThings/blob/master/Readme_Pics/Setup_ESP.jpg?raw=true)
-    
+   
    Verkabelung am ESP
    
    ![alt text](https://github.com/BriGot17/KaindorfThings/blob/master/Readme_Pics/Verkabelung_ESP.jpg?raw=true)
@@ -101,7 +108,7 @@ Um den ESP zu benutzen, muss zuerst der Code auf ihm deployed werden. Dies gesch
    (VCC) => (3V3)
    
    (A0) => (A0)
-   
+
 ## Endpoints
 
 `/api/on`: Schaltet die Lampe ein
@@ -113,8 +120,6 @@ Um den ESP zu benutzen, muss zuerst der Code auf ihm deployed werden. Dies gesch
 `/api/moisturedata`: Sensorwerte des Feuchtigkeitssensors hierher senden. Bei Werten unter 60 wird die Lampe eingeschaltet
 
 `/api/moistureout`: Gibt den aktuell gespeicherten Feuchtigkeitswert zurück
-
-
 
 ## Known Issues
 
